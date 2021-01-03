@@ -21,5 +21,3 @@ Factory.blueprint('App/Models/Letter', (faker) => {
     body: faker.paragraph(),
   };
 });
-
-Factory.model('App/Models/Letter').createMany(50);

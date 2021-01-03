@@ -60,21 +60,12 @@ test('Should UPDATE a letter', async ({ client }) => {
 });
 
 test("Shouldn't UPDATE a letter from another child", async ({ client }) => {
-  const another_child = await client
-    .post('/authenticate')
-    .send({
-      username: 'bad-child',
-      password: '123123123',
-    })
-    .end();
+  const auth_another = await client.post('/authenticate').send({ username: 'bad-child', password: '123123123' }).end();
 
   const response = await client
     .put(`/letters/${uuid}`)
-    .header('Authorization', `Bearer ${another_child.body.token}`)
-    .send({
-      title: 'aaa',
-      body: 'aaa',
-    })
+    .header('Authorization', `Bearer ${auth_another.body.token}`)
+    .send({ title: 'aaa', body: 'aaa' })
     .end();
 
   response.assertStatus(403);
@@ -82,17 +73,11 @@ test("Shouldn't UPDATE a letter from another child", async ({ client }) => {
 });
 
 test("Shouldn't Santa Claus Create a Letter", async ({ client }) => {
-  const santa_claus = await client
-    .post('/authenticate')
-    .send({
-      username: 'santa-claus',
-      password: '123123123',
-    })
-    .end();
+  const auth_santa = await client.post('/authenticate').send({ username: 'santa-claus', password: '123123123' }).end();
 
   const response = await client
     .post(`/letters`)
-    .header('Authorization', `Bearer ${santa_claus.body.token}`)
+    .header('Authorization', `Bearer ${auth_santa.body.token}`)
     .send({
       title: 'aaa',
       body: 'aaa',

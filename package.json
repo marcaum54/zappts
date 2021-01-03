@@ -31,7 +31,7 @@
     "@adonisjs/vow": "^1.0.17",
     "axios": "^0.21.1",
     "nyc": "^15.1.0",
-    "sqlite3": "^5.0.0"
+    "pg": "^8.5.1"
   },
   "devDependencies": {},
   "autoload": {

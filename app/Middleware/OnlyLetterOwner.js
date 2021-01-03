@@ -13,14 +13,11 @@ class OnlyLetterOwner {
    * @param {Function} next
    */
   async handle({ request, response, auth }, next) {
-    if (request.params && request.params.id) {
-      const authed = await auth.getUser();
+    const authed = await auth.getUser();
+    const letter = await model.findByOrFail('uuid', request.params.id);
 
-      const letter = await model.findByOrFail('uuid', request.params.id);
-
-      if (letter.owner_id !== authed.$originalAttributes.id) {
-        return response.status(403).send('You cannot change a letter that is not yours');
-      }
+    if (letter.owner_id !== authed.$originalAttributes.id) {
+      return response.status(403).send('You cannot change a letter that is not yours');
     }
 
     await next();

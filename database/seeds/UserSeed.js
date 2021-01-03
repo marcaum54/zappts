@@ -11,6 +11,7 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
+const Factory = use('Factory');
 const Model = use('App/Models/User');
 
 class UserSeed {
@@ -36,6 +37,8 @@ class UserSeed {
     });
 
     await Promise.all(promises);
+
+    await Factory.model('App/Models/Letter').createMany(50);
   }
 }
 
