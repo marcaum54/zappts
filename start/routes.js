@@ -31,8 +31,8 @@ Route.group(() => {
 Route.group(() => {
   Route.put('letters/:id', 'LetterController.update').as('letters.update').validator('LetterStore');
   Route.delete('letters/:id', 'LetterController.destroy').as('letters.destroy');
-}).middleware(['auth:jwt', 'notSantaClaus', 'OnlyLetterOwner']);
+}).middleware(['auth:jwt', 'NotSantaClaus', 'OnlyLetterOwner']);
 
 Route.group(() => {
   Route.post('letters', 'LetterController.store').as('letters.store').validator('LetterStore');
-}).middleware(['auth:jwt', 'notSantaClaus']);
+}).middleware(['auth:jwt', 'NotSantaClaus']);
