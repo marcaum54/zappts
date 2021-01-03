@@ -18,7 +18,7 @@ class UserSeed {
     const users = [
       {
         email: 'santa-claus@rourourou.com',
-        username: 'Santa Claus',
+        username: 'santa-claus',
       },
       {
         email: 'good-child@example.com',

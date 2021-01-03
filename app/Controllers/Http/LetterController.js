@@ -4,19 +4,38 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with letters
- */
+const Letter = use('App/Models/Letter');
+
 class LetterController {
-  async index({ request, response, view }) {}
+  async index({ request }) {
+    return await Letter.query()
+      .orderBy('id', request.qs.order || 'desc')
+      .paginate(request.qs.page || 1);
+  }
 
-  async store({ request, response }) {}
+  async store({ request, auth }) {
+    const user = await auth.getUser();
+    const data = Object.assign({}, request.only(['uuid', 'title', 'body']), { owner_id: user.id });
+    return await Letter.create(data);
+  }
 
-  async show({ params, request, response, view }) {}
+  async show({ params }) {
+    return await Letter.findByOrFail('uuid', params.id);
+  }
 
-  async update({ params, request, response }) {}
+  async update({ params, request }) {
+    const row = await Letter.findByOrFail('uuid', params.id);
 
-  async destroy({ params, request, response }) {}
+    row.merge(request.only(['title', 'body']));
+    row.save();
+
+    return row;
+  }
+
+  async destroy({ params }) {
+    const row = await Letter.findByOrFail('uuid', params.id);
+    await row.delete();
+  }
 }
 
 module.exports = LetterController;

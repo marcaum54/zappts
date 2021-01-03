@@ -6,10 +6,9 @@ class AuthController {
   async authenticate({ request, auth }) {
     const { username, password } = request.only(['username', 'password']);
     let token = await auth.attempt(username, password);
-    if (token) {
-      const user = await User.findBy('username', username);
-      token = Object.assign({}, token, { user: user });
-    }
+    const user = await User.findBy('username', username);
+    token = Object.assign({}, token, { user: user });
+
     return token;
   }
 
@@ -22,3 +21,5 @@ class AuthController {
     }
   }
 }
+
+module.exports = AuthController;

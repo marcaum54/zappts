@@ -19,6 +19,7 @@
       "name": "Debug Tests",
       "program": "${workspaceFolder}/ace.js",
       "args": ["test"],
+      "port": 9229,
       "internalConsoleOptions": "openOnSessionStart"
     }
   ]

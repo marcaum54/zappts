@@ -18,11 +18,21 @@ const Route = use('Route');
 
 Route.get('/', () => {
   return 'Zappts API: Online';
-});
+}).as('home');
 
-Route.post('/authenticate', 'AuthController.authenticate');
-Route.post('/current-user', 'AuthController.current_user');
+Route.post('authenticate', 'AuthController.authenticate').as('authenticate');
+Route.post('current-user', 'AuthController.current_user').as('current-user');
 
 Route.group(() => {
-  Route.resource('letters', 'LetterController').apiOnly();
-}).middleware(['auth']);
+  Route.get('letters', 'LetterController.index').as('letters.index');
+  Route.get('letters/:id', 'LetterController.show').as('letters.show');
+}).middleware(['auth:jwt']);
+
+Route.group(() => {
+  Route.put('letters/:id', 'LetterController.update').as('letters.update').validator('LetterStore');
+  Route.delete('letters/:id', 'LetterController.destroy').as('letters.destroy');
+}).middleware(['auth:jwt', 'notSantaClaus', 'OnlyLetterOwner']);
+
+Route.group(() => {
+  Route.post('letters', 'LetterController.store').as('letters.store').validator('LetterStore');
+}).middleware(['auth:jwt', 'notSantaClaus']);

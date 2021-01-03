@@ -8,8 +8,10 @@ class LetterSchema extends Schema {
     this.create('letters', (table) => {
       table.increments();
 
-      table.integer('user_id').unsigned().index();
-      table.foreign('user_id').references('id').on('users');
+      table.uuid('uuid');
+
+      table.integer('owner_id').unsigned().index().notNullable();
+      table.foreign('owner_id').references('id').on('users');
 
       table.string('title').notNullable();
       table.text('body').notNullable();
