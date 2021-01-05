@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - node
+  - 12.0.0
+sudo: false
+install:
+  - yarn
+script:
+  - ENV_SILENT=true npm test
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database zappts_test;' -U postgres
+test:
+  adapter: postgresql
+  database: zappts_test
+  username: travis
+env:
+  - APP_KEY=OZhYgy41htf7DYr1SzcmPTKRuZZhNmXV DB_CONNECTION=pg DB_DATABASE=zappts_test

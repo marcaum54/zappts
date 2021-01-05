@@ -29,7 +29,7 @@ Route.group(() => {
 }).middleware(['auth:jwt']);
 
 Route.group(() => {
-  Route.put('letters/:id', 'LetterController.update').as('letters.update').validator('LetterStore');
+  Route.put('letters/:id', 'LetterController.update').as('letters.update');
   Route.delete('letters/:id', 'LetterController.destroy').as('letters.destroy');
 }).middleware(['auth:jwt', 'NotSantaClaus', 'OnlyLetterOwner']);
 

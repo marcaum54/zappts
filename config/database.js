@@ -71,12 +71,12 @@ module.exports = {
   pg: {
     client: 'pg',
     connection: {
-      host: Env.get('DB_HOST', 'ec2-18-211-171-122.compute-1.amazonaws.com'),
-      port: Env.get('DB_PORT', '5432'),
-      user: Env.get('DB_USER', 'slsmrrjrfpabzt'),
-      password: Env.get('DB_PASSWORD', 'fccf775883edbfd83cbd43080010d2e0d557c2eba11e7aaddc690771f308c6bb'),
-      database: Env.get('DB_DATABASE', 'dfjtnutf6gm83a'),
-      ssl: { rejectUnauthorized: false },
+      host: Env.get('DB_HOST'),
+      port: Env.get('DB_PORT'),
+      user: Env.get('DB_USER'),
+      password: Env.get('DB_PASSWORD'),
+      database: Env.get('DB_DATABASE'),
+      ...(Env.get('SSL') ? { ssl: { rejectUnauthorized: false } } : {}),
     },
   },
 };
